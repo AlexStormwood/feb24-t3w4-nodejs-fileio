@@ -1,0 +1,15 @@
+{
+  "name": "feb24-t3w4-nodejs-fileio",
+  "version": "1.0.0",
+  "description": "Repo to show promises with file input and output.",
+  "main": "index.js",
+  "scripts": {
+    "dev":"nodemon src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
