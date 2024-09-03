@@ -38,6 +38,13 @@ async function writeEnvFile(){
 }
 writeEnvFile();
 
+async function app(){
+	console.log("Before calling async writer");
+	await writeEnvFile();
+	console.log("After calling async writer");
+}
+app();
+
 
 
 // console.log("Before the promise");
