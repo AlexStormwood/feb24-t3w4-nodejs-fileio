@@ -7,3 +7,38 @@ let defaultEnv = {
 }
 
 console.log(defaultEnv);
+
+let contentToWrite = "";
+
+// PORT=3030
+// SOME_DATABASE_URL=blah blah blah
+
+// ["PORT", "SOME_DATABASE_URL", "SECURITY_TOKEN", etc etc]
+Object.keys(defaultEnv).forEach(envKey => {
+	// Add a line to contentToWrite with the key name and key value
+	contentToWrite += `${envKey}=${defaultEnv[envKey]}\n`;
+});
+
+console.log(contentToWrite);
+
+
+const fs = require("node:fs");
+
+// fs.writeFileSync(".env", contentToWrite);
+// console.log("File has been written!");
+
+console.log("Before the fs callback");
+
+// fs.writeFile(filePath, fileContents, callback);
+fs.writeFile("./nonexistentfolder/.env", contentToWrite, (error) => {
+	if (error){
+		console.log("File writing had errors!");
+	} else {
+		console.log("File has been written!");
+	}
+	// console.log("writeFile has reached the blah blah blah callback");
+
+	// console.log("File has been written!");
+});
+
+console.log("After the fs callback");
