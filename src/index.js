@@ -22,23 +22,84 @@ Object.keys(defaultEnv).forEach(envKey => {
 console.log(contentToWrite);
 
 
-const fs = require("node:fs");
+// Promises-based version of node:fs
+const fs = require("node:fs/promises");
 
-// fs.writeFileSync(".env", contentToWrite);
-// console.log("File has been written!");
+console.log("Before the promise");
 
-console.log("Before the fs callback");
+fs.writeFile(".env", contentToWrite)
+.then(() => {
+	console.log("After the file has been written");
+}).then(() => {
 
-// fs.writeFile(filePath, fileContents, callback);
-fs.writeFile("./nonexistentfolder/.env", contentToWrite, (error) => {
-	if (error){
-		console.log("File writing had errors!");
-	} else {
-		console.log("File has been written!");
-	}
-	// console.log("writeFile has reached the blah blah blah callback");
+	console.log("Some other operation that had to wait for file writing to be done");
+	
+	// fs.writeFile(".someOtherFile", contentToWrite).then(() => {
+	// 	console.log("After the file has been written in the 2nd block");
+	// 	fs.writeFile("./nonexistentfolder/someOtherFile2", contentToWrite).then(() => {
+	// 		console.log("After the file has been written in the 3rd block");
+	// 	}).catch((error) => {
+	// 		console.log("Error occured in a deeply-nested promise chain", error.message);
+	// 	});
 
-	// console.log("File has been written!");
+	// }).catch(error => {
+	// 	console.log("Error occured in the 2nd promise chain", error);
+	// })
+
+})
+.then(() => {
+	console.log("This then will throw ");
+	throw new Error("Some made-up error");
+}).then(() => {
+	console.log("Last then happened!");
+}).catch((error) => {
+	console.log("This error occured:", error);
+}).finally(() => {
+	console.log("All file writing is done");
 });
 
-console.log("After the fs callback");
+console.log("After the promise");
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const fs = require("node:fs");
+
+// // fs.writeFileSync(".env", contentToWrite);
+// // console.log("File has been written!");
+
+// console.log("Before the fs callback");
+
+// // fs.writeFile(filePath, fileContents, callback);
+// fs.writeFile("./nonexistentfolder/.env", contentToWrite, (error) => {
+// 	if (error){
+// 		console.log("File writing had errors!");
+// 	} else {
+// 		console.log("File has been written!");
+// 	}
+// 	// console.log("writeFile has reached the blah blah blah callback");
+
+// 	// console.log("File has been written!");
+// });
+
+// console.log("After the fs callback");
+
+
+
+
+
+
+
+
+
+
+
